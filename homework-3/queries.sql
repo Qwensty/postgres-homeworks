@@ -17,9 +17,9 @@ ORDER BY customers.company_name;
 SELECT product_name, units_in_stock, suppliers.contact_name, suppliers.phone
 FROM products
 JOIN suppliers USING(supplier_id)
-WHERE discontinued=1 AND units_in_stock<25 AND category_id IN (SELECT category_id
-															   FROM categories
-														       WHERE category_name IN ('Dairy Products', 'Condiments'))
+WHERE discontinued=0 AND units_in_stock<25 AND category_id IN (SELECT category_id
+FROM categories
+WHERE category_name IN ('Dairy Products', 'Condiments'))
 ORDER BY units_in_stock DESC;
 
 -- 3. Список компаний заказчиков (company_name из табл customers), не сделавших ни одного заказа
@@ -33,7 +33,4 @@ ORDER BY customer_id;
 -- Этот запрос написать именно с использованием подзапроса.
 SELECT DISTINCT product_name
 FROM products
-WHERE product_id IN (SELECT product_id
-					 FROM order_details
-					 WHERE quantity=10)
-ORDER BY product_name;
+WHERE product_id IN (SELECT product_id FROM order_details WHERE quantity = 10);
